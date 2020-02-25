@@ -16,7 +16,6 @@ class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
-
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -35,3 +34,11 @@ def index():
         name = form.name.data
         form.name.data = ''
     return render_template('index.html', form=form, name=name)
+
+@app.route('/clientes', methods=['GET', 'POST'])
+def clientes():
+    return render_template('clientes.html')
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    return render_template('home.html')
