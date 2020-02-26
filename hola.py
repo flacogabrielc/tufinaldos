@@ -6,6 +6,9 @@ from wtforms import StringField, SubmitField, PasswordField, IntegerField, DateF
 from wtforms.fields.html5 import EmailField
 from wtforms import validators
 from wtforms.validators import DataRequired
+import csv
+from flask_login import LoginManager
+from forms import LoginForm, AltaUsuario, AltaCliente
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -13,28 +16,7 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-class LoginForm(FlaskForm):
-    name = StringField('Cual es tu Usuario', validators=[DataRequired(message="Por favor ingres el Usuario")])
-    psw = PasswordField('Ingrese Password', validators=[DataRequired(message="Ingrese su contrasenia")])
-    submit = SubmitField('Ingresar')
-
-class AltaUsuario(FlaskForm):
-    name = StringField('Cual es tu Usuario', validators=[DataRequired(message="Por favor ingres el Usuario")])
-    psw = PasswordField('Ingrese Password', validators=[DataRequired(message="Ingrese su contrasenia")])
-    pswr = PasswordField('Repita Password', validators=[DataRequired(message="Repita la contrasenia")])
-    submit = SubmitField('Aceptar')
-
-class AltaCliente(FlaskForm):
-    name = StringField('Nombre del Cliente', validators=[DataRequired(message="Ingrese su Nombre")])
-    age = IntegerField('Edad', validators=[DataRequired(message="Ingrese su edad")])
-    add = StringField('Direccion', validators=[DataRequired(message="Ingrese la direccion")])
-    cou = StringField('Pais', validators=[DataRequired(message="Ingrese su Pais")])
-    doc = IntegerField('Documento sin puntos ni guiones', validators=[DataRequired(message="Ingrese su Documento")])
-    dat = DateField('Ingrese su fecha de alta',validators=[DataRequired(message="Ingrese la fecha de alta")])
-    ema = EmailField('Ingrese su correo electronico', validators=[DataRequired(message="Ingrese el correo electronico")])
-    pos = StringField('Ingrese la posicion de Trabajo', validators=[DataRequired(message="Ingrese su posicion de trabajo")])
-
-
+# ---------------------------------- Manejo de errores  ----------------------------------
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -43,6 +25,28 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
+
+# ---------------------------------- login del usuario  ----------------------------------
+def validar(user, passw):
+    with open("csv/usuarios.csv", 'r') as archivo:
+        encontrado = False
+        for linea in archivo:
+            lista = linea.split(",")
+            usuario = lista[0].strip()
+            password = lista[1].strip()
+            if usuario == user:
+                if password == passw:
+                    encontrado = True
+    return encontrado
+
+# ---------------------------------- Lectura clientes   ----------------------------------
+def lerrArchivoClientes():
+    with open('csv/clietes.csv', 'r') as archivo:
+        reader = csv.reader(archivo)
+        listaClientes = list(reader)
+    return listaClientes
+
+# ---------------------------------- ruta de origen o principal  ----------------------------------
 @app.route('/', methods=['GET', 'POST'])
 def index():
     name = None
@@ -53,14 +57,19 @@ def index():
         form.name.data = ''
     return render_template('index.html', form=form, name=name)
 
-@app.route('/clientes', methods=['GET', 'POST'])
-def clientes():
+
+# ---------------------------------- se muestra el listado de clientes  ----------------------------------
+@app.route('/clientes', methods=['GET'])
+def listaClientes():
+    leerArchivoClientes()
     return render_template('clientes.html')
 
+# --------------------------------------------------------------------
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     return render_template('home.html')
 
+# ---------------------------------- formulario de alta de usuario  ----------------------------------
 @app.route('/altausuario', methods=['GET', 'POST'])
 def altausuario():
     name = None
@@ -69,11 +78,12 @@ def altausuario():
     form = AltaUsuario()
     return render_template('altausuario.html', form=form, name=name, psw=psw, pswr=pswr)
 
+# ---------------------------------- sobre la empresa ----------------------------------
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     return render_template('about.html')
 
-
+# ---------------------------------- formulario de alta cliente  ----------------------------------
 @app.route('/altacliente', methods=['GET', 'POST'])
 def altacliente():
     name = None
@@ -87,6 +97,10 @@ def altacliente():
     form=AltaCliente()
     return render_template('altacliente.html',form=form, name=name, age=age, add=add, cou=cou, doc=doc, dat=dat, ema=ema, pos=pos)
 
+# ---------------------------------- formulario de consultasl  ----------------------------------
 @app.route('/consultas', methods=['GET', 'POST'])
 def consultas():
         return render_template('consultas.html')
+
+
+# ----------------------------------   ----------------------------------
