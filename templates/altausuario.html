@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h3>Registro de Usuarios del sistema </h3>
+
+</div>
+{{ wtf.quick_form(form) }}
+{% endblock %}

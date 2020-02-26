@@ -5,7 +5,9 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>Hello, {% if name %}{{ name }}{% else %}cacho{% endif %}!</h1>
+    <h1>Hola, {% if name %}{{ name }}{% else %}Usuario{% endif %}!</h1>
+    <img src="./static/Uruguay.png" width="600" height="400">
+
 </div>
 {{ wtf.quick_form(form) }}
 {% endblock %}
