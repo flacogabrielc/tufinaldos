@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+  <div class="input-group" style="text-align: center">
+  <p style="text-align: center;font-family: Courier ;font-size: 40px;color:white"> Seleccionar Consultas </p> <br>
+      <select name="consulta_seleccionada" class="selectpicker form-control" style="text-align: center" required onchange="if(this.value=='ppc' || this.value=='cpp') {document.getElementById('filtro').disabled = false} else {document.getElementById('filtro').disabled = true} "><br><br>
+          <option value="pmv">Productos mas vendidos</option>
+          <option value="cmg">Clientes que mas gastaron</option>
+          <option value="ppc">Productos por cliente</option>
+          <option value="cpp">Clientes por producto</option>
+      </select>
+
+
+    <h3>Consultas del sistema en general</h3>
+</div>
+{% endblock %}
+
+
+
+
+
+
+<!-- <body>
+   <div class='centrar'>
+    <form action="/buscar" method="POST">
+        <div class="form-group" style="text-align: center">
+            <div class="input-group" style="text-align: center">
+		        <p style="text-align: center;font-family: Courier ;font-size: 40px;color:white"> Seleccionar Consultas </p> <br>
+                <select name="consulta_seleccionada" class="selectpicker form-control" style="text-align: center" required onchange="if(this.value=='ppc' || this.value=='cpp') {document.getElementById('filtro').disabled = false} else {document.getElementById('filtro').disabled = true} "><br><br>
+                    <option value="pmv">Productos mas vendidos</option>
+                    <option value="cmg">Clientes que mas gastaron</option>
+                    <option value="ppc">Productos por cliente</option>
+                    <option value="cpp">Clientes por producto</option>
+                </select>
+
+              <input id="filtro" type="text" name="filtroBusqueda" placeholder="Escribir cliente o producto" disabled> <br><br>
+            </div>
+                <button type="submit">Buscar</button>
+         </div>
+    </form>
+    <div>
+
+ {% block footer %}
+        <br>
+      <p style="text-align: center;background-color:#63646d;font-family: Courier;color:rgb(185,185,185) ">F A R M A @ </p>
+        <br>
+        <br>
+      {% endblock %}
+</body>
+
+{% endblock %} -->

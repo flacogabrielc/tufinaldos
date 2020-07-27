@@ -5,8 +5,32 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h3>Registro de Usuarios del sistema </h3>
-
+    <h3>Alta de Usuario</h3>
 </div>
-{{ wtf.quick_form(form) }}
+
+<!-- {{ wtf.quick_form(form) }} -->
+
+<form action="#" method="POST">
+
+
+	{{ form.csrf_token }}</br>
+    {{ form.name.label }} {{ form.name(size=20) }}</br>
+    {{ form.psw.label }} {{ form.psw(size=20) }}</br>
+  	{{ form.pswr.label }} {{ form.pswr(size=20) }}</br></br>
+
+	 {% with messages=get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<label class="alert alert-warning">{{message}}</label>
+
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+
+    {{ form.submit }}
+
+
+		</div>
+	</div>
+</form>
 {% endblock %}

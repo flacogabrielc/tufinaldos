@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/static/css/style1.css">
+{% endblock %}
+
+
+
+{% block title %}
+Error
+{% endblock %}
+
+
+{% block content %}
+<style>
+body{
+	background:#63646d
+}
+</style>
+
+<div style="border:5px"><div  style="display: flex;justify-content: center;align-items: center">
+<h2 style="color:white ;text-align: center">Usuario Loguead</h2></div>
+<br><br><br><br>
+
+<div style="display: flex;justify-content: center;align-items: center"><a href="/index" class="btn btn-primary active" role="button" >Volver al inicio</a>
+</div>
+</div>
+
+{% endblock %}

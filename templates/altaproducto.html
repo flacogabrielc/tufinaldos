@@ -9,19 +9,14 @@
 </div>
 
 <!-- {{ wtf.quick_form(form) }} -->
-
 <form action="#" method="POST">
 
 
 	{{ form.csrf_token }}</br>
-    {{ form.name.label }} {{ form.name(size=20) }}</br>
-    {{ form.age.label }} {{ form.age(size=20) }}</br>
-  	{{ form.add.label }} {{ form.add(size=20) }}</br>
-    {{ form.cou.label }} {{ form.cou(size=20) }}</br>
-    {{ form.doc.label }} {{ form.doc(size=20) }}</br>
-    {{ form.dat.label }} {{ form.dat(size=20) }}</br>
-    {{ form.ema.label }} {{ form.ema(size=20) }}</br>
-    {{ form.pos.label }} {{ form.pos(size=20) }}</br></br>
+    {{ form.cod.label }} {{ form.cod(size=20) }}</br>
+    {{ form.desc.label }} {{ form.desc(size=20) }}</br>
+  	{{ form.precio.label }} {{ form.precio(size=20) }}</br>
+    {{ form.stock.label }} {{ form.stock(size=20) }}</br></br>
 
 	 {% with messages=get_flashed_messages() %}
 		{% if messages %}
@@ -32,9 +27,8 @@
 		{% endif %}
 	{% endwith %}
 
-  {{ form.submit }}
+    {{ form.submit }}
 
-  <input type="reset" value="Borrar todo", id="123">
 
 		</div>
 	</div>
