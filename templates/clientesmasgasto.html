@@ -5,7 +5,7 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h3>Alta de Usuario</h3>
+    <h3>Clientes que mas gastaron</h3>
 </div>
 
 <!-- {{ wtf.quick_form(form) }} -->
@@ -14,9 +14,7 @@
 
 
 	{{ form.csrf_token }}</br>
-    {{ form.name.label }} {{ form.name(size=20) }}</br>
-    {{ form.psw.label }} {{ form.psw(size=20) }}</br>
-  	{{ form.pswr.label }} {{ form.pswr(size=20) }}</br></br>
+    {{ form.cantidad.label }} {{ form.cantidad(size=4, maxlength=4) }}</br></br>
 
 	 {% with messages=get_flashed_messages() %}
 		{% if messages %}
@@ -27,7 +25,7 @@
 		{% endif %}
 	{% endwith %}
 
-    {{ form.submit }}
+  {{ form.submit }}
 
 
 		</div>

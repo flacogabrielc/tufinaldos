@@ -5,7 +5,7 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h3>Alta de Usuario</h3>
+    <h3>Busqueda Clientes por rango edad</h3>
 </div>
 
 <!-- {{ wtf.quick_form(form) }} -->
@@ -14,9 +14,9 @@
 
 
 	{{ form.csrf_token }}</br>
-    {{ form.name.label }} {{ form.name(size=20) }}</br>
-    {{ form.psw.label }} {{ form.psw(size=20) }}</br>
-  	{{ form.pswr.label }} {{ form.pswr(size=20) }}</br></br>
+    {{ form.age_ini.label }} {{ form.age_ini(size=20) }}</br>
+    {{ form.age_fin.label }} {{ form.age_fin(size=20) }}</br>
+    </br>
 
 	 {% with messages=get_flashed_messages() %}
 		{% if messages %}
@@ -27,7 +27,7 @@
 		{% endif %}
 	{% endwith %}
 
-    {{ form.submit }}
+  {{ form.submit }}
 
 
 		</div>

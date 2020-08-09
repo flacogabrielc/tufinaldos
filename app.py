@@ -9,7 +9,8 @@ from wtforms import validators
 from wtforms.validators import DataRequired
 import csv
 from flask_login import LoginManager
-from forms import LoginForm, AltaUsuario, AltaCliente, AltaProducto
+from forms import LoginForm, AltaUsuario, AltaCliente, AltaProducto, ClientePais, CliRanEt, CliRanFec, ProductosMasVendidos
+from forms import ClientesMasGastasron, ClientesProducto, ProductosCliente, VentaProducto
 from flask_sqlalchemy import SQLAlchemy
 #
 # basedir = os.path.abspath(os.path.dirname(__file__))
@@ -142,6 +143,63 @@ def logout():
 def home():
     return render_template('home.html')
 
+
+#------------------------busqueda clientes por Pais----------------------------------------------------
+
+
+@app.route('/clipais', methods=['GET', 'POST'])
+def clipais():
+    formulario = ClientePais()
+    lista = []
+    us_auth=('username' in session)
+
+    if formulario.validate_on_submit() and us_auth:
+        with open('csv/clientes.csv', 'r') as archivo:
+            reader = csv.reader(archivo)
+            for row in reader:
+                if row[3].lower() == formulario.pais.data.lower():
+                    lista.append(row)
+    return render_template('country.html', form = formulario, lista = lista)
+
+
+    #return render_template('clipais.html', form=formulario)
+
+
+# def clipais():
+#     formulario = BusquedaClientePais()
+#     lista = []
+#     us_auth=('username' in session)
+#     if formulario.validate_on_submit() and us_auth:
+#         with open('csv/clientes.csv', 'r') as archivo:
+#             reader = csv.reader(archivo)
+#             for row in reader:
+#                 if row[3].lower() == formulario.pais.data.lower():
+#                     lista.append(row)
+
+    #return render_template('country.html', form = formulario, lista = lista)
+
+
+
+
+
+
+
+# @app.route('/about', methods=['GET', 'POST'])
+# def about():
+#     return render_template('about.html')
+
+#------------------------busqueda clientes por Rango etario----------------------------------------------------
+@app.route('/cliedad', methods=['GET', 'POST'])
+def cliedad():
+    formulario = CliRanEt()
+    return render_template('cliedad.html', form=formulario)
+#------------------------busqueda clientes por fecha alta----------------------------------------------------
+@app.route('/cliealta', methods=['GET', 'POST'])
+def cliealta():
+    formulario = CliRanFec()
+    return render_template('cliealta.html', form=formulario)
+
+
 # ---------------------------------- formulario de alta de usuario  ----------------------------------
 @app.route('/altausuario', methods=['GET', 'POST'])
 def alta():
@@ -205,20 +263,47 @@ def altaproducto():
         flash('Ingrese todos los campos')
     return render_template('altaproducto.html',form=formulario)
 
-    # cod = StringField('Codigo del producto', validators=[DataRequired(message="Ingrese el codigo")])
-    # desc = StringField('Descripcion del producto', validators=[DataRequired(message="Ingrese la descripcion")])
-    # precio = DecimalField('Ingrese el precio del producto', validators=[DataRequired(message="Ingrese el precio del producto")])
-    # stock = IntegerField('Ingrese el stock del producto', validators=[DataRequired(message="Ingrese el stock disponible")])
+#-------------------------------- Muestra los n productos mas vendidos--------------------------
+@app.route('/prodmasvendido', methods =['GET', 'POST'])
+def prodmasvendido():
+    formulario = ProductosMasVendidos()
+    return render_template('prodmasvendido.html', form=formulario)
 
+# ----------------------------------------------
+@app.route('/clientesmasgasto', methods= ['GET', 'POST'])
+def clientesmasgasto():
+    formulario = ClientesMasGastasron()
+    return render_template('clientesmasgasto.html', form=formulario)
+
+# ----------------------------------------------
+@app.route('/clientesporprod', methods= ['GET', 'POST'])
+def clientesporprod():
+    formulario = ClientesProducto()
+    return render_template('clientesporprod.html', form=formulario)
+
+# ----------------------------------------------
+@app.route('/prodporcliente', methods= ['GET', 'POST'])
+def prodporcliente():
+    formulario = ProductosCliente()
+    return render_template('prodporcliente.html', form=formulario)
+
+
+
+@app.route('/ventaproducto', methods= ['GET', 'POST'])
+def ventaproducto():
+    formulario= VentaProducto()
+    return render_template('ventaproducto.html', form=formulario)
 
 
 # ---------------------------------- busqueda clientes pais  ----------------------------------
 # @app.route('/country')
 
 # ---------------------------------- formulario de consultasl  ----------------------------------
-@app.route('/consultas', methods=['GET', 'POST'])
-def consultas():
-        return render_template('consultas.html')
+# @app.route('/consultas', methods=['GET', 'POST'])
+# def consultas():
+#         return render_template('consultas.html')
+#
+
 # --------------------------------------------------------------------
 if __name__ == '__main__':
     app.run()
