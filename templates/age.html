@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h3>Busqueda de clientes por edad</h3>
+</div>
+
+<!-- {{ wtf.quick_form(form) }} -->
+<form action="#" method="POST">
+	{{ form.csrf_token }}
+  {{ form.age_ini.label }} {{ form.age_ini(size=20) }}
+  {{ form.age_fin.label }} {{ form.age_fin(size=20) }}
+  {% with messages=get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <label class="alert alert-warning">{{message}}</label>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {{ form.submit }}
+</form>
+<div class="container-fluid">
+  {% if lista|length > 0 %}
+    <table class="table table-bordered table-condensed" >
+      <tbody>
+      {% for linea in lista %}
+        <tr class="active">
+          {% for item in  linea %}
+            <td >{{item}}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+  <div class="alert alert-primary" role="alert">
+    No hay resultados, probá con otra busqueda!
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

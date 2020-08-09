@@ -40,8 +40,8 @@ class ClientePais(FlaskForm):
     submit = SubmitField('Buscar')
 
 class CliRanEt(FlaskForm):
-    age_ini = IntegerField('Edad menor')
-    age_fin = IntegerField('Edad mayor')
+    age_ini = StringField('Edad menor')
+    age_fin = StringField('Edad mayor')
     submit = SubmitField('Buscar')
 
 class CliRanFec(FlaskForm):

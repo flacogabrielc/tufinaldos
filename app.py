@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, math
 from flask import Flask, render_template, session, flash, redirect, url_for, request, send_file, redirect
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
@@ -145,8 +145,6 @@ def home():
 
 
 #------------------------busqueda clientes por Pais----------------------------------------------------
-
-
 @app.route('/clipais', methods=['GET', 'POST'])
 def clipais():
     formulario = ClientePais()
@@ -161,48 +159,51 @@ def clipais():
                     lista.append(row)
     return render_template('country.html', form = formulario, lista = lista)
 
-
-
-# original sebi ver para cambiar tener en cuenta que cli pais debe tener el form y evidentecmente country tambien
-# @app.route('/clipais', methods=['GET', 'POST'])
-# def clipais():
-#     formulario = BusquedaClientePais()
-#     lista = []
-#     us_auth=('username' in session)
-#     if formulario.validate_on_submit() and us_auth:
-#         with open('csv/clientes.csv', 'r') as archivo:
-#             reader = csv.reader(archivo)
-#             for row in reader:
-#                 if row[3].lower() == formulario.pais.data.lower():
-#                     lista.append(row)
-#
-#     return render_template('country.html', form = formulario, lista = lista)
-
-
-
-
-
-
-
-
-
-
-
 # @app.route('/about', methods=['GET', 'POST'])
 # def about():
 #     return render_template('about.html')
 
 #------------------------busqueda clientes por Rango etario----------------------------------------------------
+# @app.route('/cliedad', methods=['GET', 'POST'])
+# def cliedad():
+#     formulario = CliRanEt()
+#     return render_template('cliedad.html', form=formulario)
+
 @app.route('/cliedad', methods=['GET', 'POST'])
 def cliedad():
     formulario = CliRanEt()
-    return render_template('cliedad.html', form=formulario)
+    lista = []
+    us_auth=('username' in session)
+
+    #leer desde fila + 1 en el csv
+    if formulario.validate_on_submit() and us_auth:
+        with open('csv/clientes.csv', 'r') as archivo:
+            reader = csv.reader(archivo)
+            next(reader)
+            # self.age_ini = edadini
+            # self.age_fin = edadfin
+            # edad = int(row[1])
+            for row in reader:
+                # edad = int(row[1])
+                if (int(row[1])  >= int(formulario.age_ini.data)) and (int(row[1]) <= int(formulario.age_fin.data)):
+                    lista.append(row)
+
+    return render_template('age.html', form = formulario, lista = lista)
+
+#
+# class CliRanEt(FlaskForm):
+#     age_ini = IntegerField('Edad menor')
+#     age_fin = IntegerField('Edad mayor')
+#     submit = SubmitField('Buscar')
+
+
+
+
 #------------------------busqueda clientes por fecha alta----------------------------------------------------
 @app.route('/cliealta', methods=['GET', 'POST'])
 def cliealta():
     formulario = CliRanFec()
     return render_template('cliealta.html', form=formulario)
-
 
 # ---------------------------------- formulario de alta de usuario  ----------------------------------
 @app.route('/altausuario', methods=['GET', 'POST'])
