@@ -162,9 +162,9 @@ def clipais():
     return render_template('country.html', form = formulario, lista = lista)
 
 
-    #return render_template('clipais.html', form=formulario)
 
-
+# original sebi ver para cambiar tener en cuenta que cli pais debe tener el form y evidentecmente country tambien
+# @app.route('/clipais', methods=['GET', 'POST'])
 # def clipais():
 #     formulario = BusquedaClientePais()
 #     lista = []
@@ -175,8 +175,12 @@ def clipais():
 #             for row in reader:
 #                 if row[3].lower() == formulario.pais.data.lower():
 #                     lista.append(row)
+#
+#     return render_template('country.html', form = formulario, lista = lista)
 
-    #return render_template('country.html', form = formulario, lista = lista)
+
+
+
 
 
 

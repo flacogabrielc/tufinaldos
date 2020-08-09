@@ -1,15 +1,31 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Flasky{% endblock %}
-{% block page_content %}
 
-Busqueda de clientes por pais
-{{ form.csrf_token }} {{ form.pais.label }} {{ form.pais(size=20) }} {% with messages=get_flashed_messages() %} {% if messages %} {% for message in messages %} {{message}} {% endfor %} {% endif %} {% endwith %} {{ form.submit }}
-{% if lista|length > 0 %} {% for item in linea %}
-{% for linea in lista %}
-{{item}}	{% endfor %}
-{% endfor %}
-{% else %}
-No hay resultados, probá con otra busqueda!
-{% endif %}
+{% block title %}UruSA{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h3>Busqueda de clientes por pais</h3>
+</div>
+
+  {{ form.csrf_token }}
+    {{ form.pais.label }} {{ form.pais(size=20) }}
+
+    {% with messages=get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          {{message}}
+        {% endfor %}
+      {% endif %}
+    {% endwith %} {{ form.submit }}
+
+    {% if lista|length > 0 %}
+      {% for item in linea %}
+        {% for linea in lista %}
+          {{item}}
+        {% endfor %}
+      {% endfor %}
+    {% else %}
+    No hay resultados, probá con otra busqueda!
+    {% endif %}
 {% endblock %}
